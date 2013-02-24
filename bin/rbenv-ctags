@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# Summary: Generate ctags for a given version's standard library
+#
+# Usage: rbenv ctags <version>
+#        rbenv ctags [--all]
 
 shopt -s nullglob
 
@@ -34,7 +39,7 @@ generate_ctags_for() {
   fi
 }
 
-if [ $# = 0 ]; then
+if [ $# = 0 -o --all = "$1" ]; then
   for version in $(rbenv-versions --bare); do
     [ -L "$RBENV_ROOT/versions/$version" ] || \
       generate_ctags_for "$RBENV_ROOT/versions/$version"
