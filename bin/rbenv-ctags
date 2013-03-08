@@ -27,7 +27,8 @@ generate_ctags_for() {
     done
     for dir in \
       "$1"/lib/ruby/site_ruby/[0-9]* \
-      "$1"/lib/ruby/vendor_ruby/[0-9]*
+      "$1"/lib/ruby/vendor_ruby/[0-9]* \
+      "$1"/lib/ruby/gems/[0-9]*
     do
       [ "$(find "$dir" -name '*.rb'|wc -l)" = 0 ] || generate_ctags_in "$dir"
     done
