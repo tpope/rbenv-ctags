@@ -3,5 +3,7 @@ if declare -Ff after_install >/dev/null; then
 fi
 
 generate_ctags() {
-  rbenv-ctags "$VERSION_NAME"
+  if [ "$STATUS" -eq 0 ]; then
+    rbenv-ctags "$VERSION_NAME"
+  fi
 }
