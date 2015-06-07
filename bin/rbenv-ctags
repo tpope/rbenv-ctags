@@ -13,8 +13,11 @@ if [ "$1" = "--complete" ]; then
 fi
 
 generate_ctags_in() {
-  echo "Running ctags on $1"
-  (cd "$1"; ctags -R --languages=ruby)
+  local tags_file_dir="$1"
+  local languages="${2:-ruby}"
+  local source_code_dir="${3:-$tags_file_dir}"
+  echo "Running ctags on $source_code_dir"
+  (cd "$tags_file_dir"; ctags --languages="$languages" -R "$source_code_dir")
 }
 
 generate_ctags_for() {
@@ -35,6 +38,14 @@ generate_ctags_for() {
     generate_ctags_in "$1/lib"
   else
     echo "No directories for ctags found in $1" >&2
+    return 1
+  fi
+
+  local ruby_include_dir="$(ls -d $1/include/ruby-*)"
+  if [ -w "$ruby_include_dir" ]; then
+    generate_ctags_in "$ruby_include_dir" "C,C++" "${RUBY_BUILD_BUILD_PATH:-$ruby_include_dir}"
+  else
+    echo "No Ruby include directory for ctags found in $1" >&2
     return 1
   fi
 }
