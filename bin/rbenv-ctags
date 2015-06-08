@@ -41,7 +41,7 @@ generate_ctags_for() {
     return 1
   fi
 
-  local ruby_include_dir="$(ls -d $1/include/ruby-*)"
+  local ruby_include_dir="$(RBENV_VERSION=$version ruby -rrbconfig -e 'print RbConfig::CONFIG["rubyhdrdir"] || RbConfig::CONFIG["topdir"]')"
   if [ -w "$ruby_include_dir" ]; then
     generate_ctags_in "$ruby_include_dir" "C,C++" "${RUBY_BUILD_BUILD_PATH:-$ruby_include_dir}"
   else
