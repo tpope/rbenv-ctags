@@ -52,11 +52,11 @@ generate_ctags_for() {
 
 if [ $# = 0 -o --all = "$1" ]; then
   for version in $(rbenv-versions --bare); do
-    [ -L "$RBENV_ROOT/versions/$version" ] || \
-      generate_ctags_for "$RBENV_ROOT/versions/$version"
+    [ -L "$(rbenv-prefix "$version")" ] || \
+      generate_ctags_for "$(rbenv-prefix "$version")"
   done
 else
   for version in "$@"; do
-    generate_ctags_for "$RBENV_ROOT/versions/$version"
+    generate_ctags_for "$(rbenv-prefix "$version")"
   done
 fi
