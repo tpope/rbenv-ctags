@@ -17,7 +17,7 @@ generate_ctags_in() {
   local languages="${2:-Ruby}"
   local source_code_dir="${3:-$tags_file_dir}"
   echo "Running ctags on $source_code_dir"
-  (cd "$tags_file_dir"; ctags --languages="$languages" -R "$source_code_dir")
+  (cd "$tags_file_dir"; ctags --languages="$languages" -R --tag-relative=yes "$source_code_dir")
 }
 
 generate_ctags_for() {
