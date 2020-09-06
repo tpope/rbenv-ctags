@@ -36,7 +36,7 @@ generate_ctags_in() {
   local languages="${2:-Ruby}"
   local source_code_dir="${3:-$tags_file_dir}"
   echo "Running ctags on $source_code_dir"
-  if [[ "$languages" == "Ruby" ]] && command -v ripper-tags 2>&1 >/dev/null; then
+  if [[ "$languages" == "Ruby" ]] && rbenv-which ripper-tags 2>&1 >/dev/null; then
     (cd "$tags_file_dir"; ripper-tags --recursive --tag-relative=yes "$source_code_dir")
   else
     (cd "$tags_file_dir"; ctags --languages="$languages" --recurse --tag-relative=yes "$source_code_dir")
