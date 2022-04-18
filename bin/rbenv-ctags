@@ -5,6 +5,7 @@
 # Usage: rbenv ctags
 #        rbenv ctags <version> [<version> ...]
 #        rbenv ctags --all
+#        rbenv ctags --ripper
 
 shopt -s nullglob
 
@@ -21,6 +22,9 @@ for arg; do
     -a|--all)
       all=1
       ;;
+    --ripper)
+      ripper=1
+      ;;
     -*)
       rbenv-help --usage ctags >&2
       exit 1
@@ -35,10 +39,11 @@ generate_ctags_in() {
   local tags_file_dir="$1"
   local languages="${2:-Ruby}"
   local source_code_dir="${3:-$tags_file_dir}"
-  echo "Running ctags on $source_code_dir"
-  if [[ "$languages" == "Ruby" ]] && rbenv-which ripper-tags 2>&1 >/dev/null; then
+  if [[ "$languages" == "Ruby" ]] && [ -n "$ripper" ] && rbenv-which ripper-tags 2>&1 >/dev/null; then
+    echo "Running ripper-tags on $source_code_dir"
     (cd "$tags_file_dir"; ripper-tags --recursive --tag-relative=yes "$source_code_dir")
   else
+    echo "Running ctags on $source_code_dir"
     (cd "$tags_file_dir"; ctags --languages="$languages" --recurse --tag-relative=yes "$source_code_dir")
   fi
 }
@@ -74,6 +79,10 @@ generate_ctags_for() {
     return 1
   fi
 }
+
+if [ -n "$ripper" ] && ! rbenv-which ripper-tags 2>&1 >/dev/null; then
+  exit "1"
+fi
 
 if [ -n "$all" ]; then
   for version in $(rbenv-versions --bare); do
