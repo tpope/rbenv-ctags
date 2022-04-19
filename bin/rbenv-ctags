@@ -3,9 +3,8 @@
 # Summary: Generate ctags for a given version's standard library
 #
 # Usage: rbenv ctags
-#        rbenv ctags <version> [<version> ...]
-#        rbenv ctags --all
-#        rbenv ctags --ripper
+#        rbenv ctags <version> [<version> ...] [--ripper]
+#        rbenv ctags --all [--ripper]
 
 shopt -s nullglob
 
@@ -81,7 +80,7 @@ generate_ctags_for() {
 }
 
 if [ -n "$ripper" ] && ! rbenv-which ripper-tags 2>&1 >/dev/null; then
-  exit "1"
+  exit 1
 fi
 
 if [ -n "$all" ]; then
