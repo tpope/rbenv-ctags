@@ -6,7 +6,7 @@ gems][gem-ctags].  All I'm missing is tags for Ruby stdlib.  Until now.
 ## Installation
 
     mkdir -p ~/.rbenv/plugins
-    git clone git://github.com/tpope/rbenv-ctags.git \
+    git clone https://github.com/tpope/rbenv-ctags.git \
       ~/.rbenv/plugins/rbenv-ctags
     rbenv ctags
 
