@@ -2,9 +2,9 @@
 #
 # Summary: Generate ctags for a given version's standard library
 #
-# Usage: rbenv ctags
-#        rbenv ctags <version> [<version> ...] [--ripper]
-#        rbenv ctags --all [--ripper]
+# Usage: rbenv ctags [--ripper]
+#        rbenv ctags [--ripper] <version> [<version> ...]
+#        rbenv ctags [--ripper] --all
 
 shopt -s nullglob
 
